@@ -58,44 +58,81 @@ void ARN::insertionRec(Noeud *&node, const Element &e){
 }
 
 void ARN::insertion(const Element &e){
+    //insertion sans regarder les couleurs
     insertionRec(this->racine, e);
-    this->racine->couleur = 'N';
+    //this->racine->couleur = 'N';        //TODO move to insertionRec()
+    
+    //Reequilibrage local
+    Noeud* parent = getNoeudParent(e);
+    Noeud* grandParent = getNoeudGrandParent(e);
+    Noeud* oncle = getNoeudOncle(e);
+    cout << "insertion " << e << " | pere : " << parent << " | gd-pere : " << grandParent << " | oncle : " << oncle << endl;        //TODO debug only
+    if(parent != nullptr and grandParent != nullptr and oncle != nullptr){
+        //TODO gestion recursive
+        //reequilibrage local "si le noeud Q possede un oncle O rouge, alors on change la couleur de P et de Q qui deviennent noirs et PP devient rouge"
+        if(oncle->couleur=='R'){
+            cout << "yes" << endl;    
+            oncle->couleur = 'N';
+            parent->couleur = 'N';
+            grandParent->couleur = 'R';
+        }
 
+        
+    }
+
+    
+    //TODO ne pas oublier de mettre la racine en noir à la fin de la fonction.
 }
 
-
-
 Noeud* ARN::getNoeudParent(const Element &e){
-    Noeud* parent = new Noeud;
     Noeud* recherche = this->racine;
-    while(recherche){
-        if(recherche->info == e){
-            return parent;
+    Noeud* parent = nullptr;
+    while(recherche && recherche->info != e){
+/*
+        cout << "elmt recherche : " << e << " | actuel : " << recherche->info << " | pere : ";
+        if(parent == nullptr){
+            cout << "nullptr" << endl;
         }
-        else if(recherche->info < e){
+        else{
+            cout << parent->info << endl;
+        }
+*/      
+        if(recherche->info < e){
             parent = recherche;
             recherche = recherche->fd;
         }
         else{
             parent = recherche;
             recherche = recherche->fg;
-        }   
+        }
     }
+    return parent;
+}
+
+
+Noeud* ARN::getNoeudGrandParent(const Element &e){
+    Noeud* grandParent = nullptr;
+    Noeud* parent = getNoeudParent(e);
+    if(parent != nullptr){
+        grandParent = getNoeudParent(parent->info);
+    }
+    return grandParent;
 }
 
 Noeud* ARN::getNoeudOncle(const Element &e){
-    Noeud* oncle;
+    Noeud* oncle = nullptr;
     Noeud* parent = getNoeudParent(e);
-    Noeud* grandParent = getNoeudParent(parent->info);
-    if(grandParent->fd == parent){
-        oncle = grandParent->fg;
-    } 
-    else{
-        oncle = grandParent->fd;
+    Noeud* grandParent = getNoeudGrandParent(e);
+    if(grandParent !=nullptr){
+        if(grandParent->fd == parent){
+            oncle = grandParent->fg;
+        }
+        else{
+            oncle = grandParent->fg;
+        }
     }
     return oncle;
 }
-
 
 
 

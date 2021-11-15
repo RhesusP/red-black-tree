@@ -4,11 +4,13 @@
 using namespace std;
 
 int main(){
+    /*
     ARN arbre;
     for(int i=0 ; i<20 ; i++){
         arbre.insertion(i);
     }
     arbre.affichage();
+*/
 
     ARN test;
     test.insertion(10);
@@ -28,9 +30,11 @@ int main(){
     a->affichageNoeud();
     cout << endl;
 
-    Noeud* b = test.getNoeudOncle(7);
-    cout << "Oncle de 0 : ";
+    Noeud* b = test.getNoeudParent(7);
+    cout << "Pere de 7 : ";
     b->affichageNoeud();
     cout << endl;
 
+
+    return 0;
 }

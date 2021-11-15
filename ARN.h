@@ -8,13 +8,14 @@ class ARN{
         Noeud* racine;
         int hauteurNoire;
 
-        ARN();
+        ARN();  
         //TODO destructeur de l'ARN
         ~ARN();
         void insertion(const Element &e);
         bool rechercherElement(const Element &e);
         void affichage();
         Noeud* getNoeudParent(const Element &e);
+        Noeud* getNoeudGrandParent(const Element &e);
         Noeud* getNoeudOncle(const Element &e);
     
     private:
