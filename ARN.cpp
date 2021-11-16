@@ -62,6 +62,7 @@ void ARN::insertion(const Element &e){
     insertionRec(this->racine, e);
     //this->racine->couleur = 'N';        //TODO move to insertionRec()
     
+    
     //Reequilibrage local
     Noeud* parent = getNoeudParent(e);
     Noeud* grandParent = getNoeudGrandParent(e);
@@ -71,7 +72,7 @@ void ARN::insertion(const Element &e){
         //TODO gestion recursive
         //reequilibrage local "si le noeud Q possede un oncle O rouge, alors on change la couleur de P et de Q qui deviennent noirs et PP devient rouge"
         if(oncle->couleur=='R'){
-            cout << "yes" << endl;    
+            cout << "yes" << endl;
             oncle->couleur = 'N';
             parent->couleur = 'N';
             grandParent->couleur = 'R';
@@ -142,7 +143,7 @@ void ARN::affichageRec(Noeud* n, int prof){
         for(int i=0 ; i<prof ; i++){
             cout << "       ";
         }
-        cout << n->info << " (" << n->couleur << ")" << endl;
+        cout << "─────┤" << n->info << " (" << n->couleur << ")" << endl;
         affichageRec(n->fg, prof+1);
     }
 }

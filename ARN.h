@@ -21,6 +21,7 @@ class ARN{
     private:
         void affichageRec(Noeud* n, int prof);
         void insertionRec(Noeud *&node, const Element &e);
+        void rotationDroite(Noeud *&node);
     };
 
 #endif
