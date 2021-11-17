@@ -57,7 +57,9 @@ On fait alors une **<span style="color:red">rotation gauche<span>**. Cela équiv
 ![rotation gauche](img/rotation_gauche.png)    
 
 #### 3) Si le `Noeud` **Q** est fils droit de **P**, lui-même fils droit de **PP**
-Symétrie du cas 1)
+Symétrie du cas 1)  
+![rotation droite symetrique](img/rotation_droite_symetrique.png)
 
 #### 4) Si le `Noeud` **Q** est le fils gauche de **P**, lui-même fils droit de **PP**
 Symétrie du cas 2)
+![rotation gauche symétrique](img/rotation_gauche_symetrique.png)
