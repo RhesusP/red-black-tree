@@ -9,7 +9,7 @@ ARN::ARN(){
 }
 
 ARN::~ARN(){
-    cout << "Destruction ARN." << endl;
+    //cout << "Destruction ARN." << endl;
     if(racine != NULL){
         vider(racine);
     }
@@ -30,7 +30,7 @@ Noeud* ARN::rechercherElement(const Element &e){
     Noeud * recherche = this->racine;
     while(recherche){
         if(recherche->info == e){
-            cout << "L'element : " << e << "  a été trouvé." <<endl;
+            //cout << "L'element : " << e << "  a été trouvé." <<endl;
             return recherche;
         }
         else if(recherche->info < e){
@@ -40,7 +40,7 @@ Noeud* ARN::rechercherElement(const Element &e){
             recherche = recherche->fg;
         }   
     }
-    cout << "L'element " << e << "  n'est pas dans l'arbre." << endl;
+    //cout << "L'element " << e << "  n'est pas dans l'arbre." << endl;
     return nullptr;
 }
 
@@ -50,7 +50,7 @@ void ARN::insertionRec(Noeud *&node, const Element &e){
         node->couleur = 'R';
     }
     else if(e == node->info){
-        cout << "Impossible d'ajouter l'element " << e << " (doublons non autorisés)." << endl;
+        //cout << "Impossible d'ajouter l'element " << e << " (doublons non autorisés)." << endl;
     }
     else{
         if(e > node->info){
@@ -72,15 +72,15 @@ void ARN::equilibrage(Noeud* node){
     Noeud* pere = getNoeudParent(node);
     Noeud* oncle = getNoeudOncle(node);
     if(pere == nullptr){                //on tombe sur la racine (cas 1)
-        cout << "***** Cas de la racine ******" << endl;
+        //cout << "***** Cas de la racine ******" << endl;
         node->couleur = 'N';
     }
     else if(pere->couleur == 'N'){                              //(cas 2)
-        cout << "***** Cas equilibré de l'ARN ******" << endl;
+        //cout << "***** Cas equilibré de l'ARN ******" << endl;
         return;
     }
     else if(oncle != nullptr and oncle->couleur == 'R'){     //oncle rouge : recoloration oncle et pere en noir et gd-pere en rouge     //(cas 3)
-        cout << "****** Cas de l'oncle rouge ******" << endl;
+        //cout << "****** Cas de l'oncle rouge ******" << endl;
         cas1(node);
     }
     else{
@@ -124,7 +124,7 @@ void ARN::cas2(Noeud* node){
 }
 
 void ARN::rotationGauche(Noeud* node){
-    cout << "****** Cas de la rotation gauche ******" << endl;
+    //cout << "****** Cas de la rotation gauche ******" << endl;
 
     Noeud* temp = node->fd;
     Noeud* pereFgTemp = nullptr;
@@ -153,7 +153,7 @@ void ARN::rotationGauche(Noeud* node){
 }
 
 void ARN::rotationDroite(Noeud* node){
-    cout << "****** Cas de la rotation droite ******" << endl;
+    //cout << "****** Cas de la rotation droite ******" << endl;
 
     Noeud* temp = node->fg;
     Noeud* pereFdTemp = nullptr;

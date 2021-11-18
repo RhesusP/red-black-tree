@@ -9,7 +9,7 @@ ABR::ABR(){
 }
 
 ABR::~ABR(){
-    cout << "Destruction ABR." << endl;
+    //cout << "Destruction ABR." << endl;
     if(racine != NULL){
         vider(racine);
     }
@@ -35,7 +35,7 @@ void ABR::insertionRec(Noeud *&node, const Element &e){
         node = new Noeud(e);
     }
     else if(e == node->info){
-        cout << "Impossible d'ajouter l'element " << e << " (doublons non autorisés)." << endl;
+        //cout << "Impossible d'ajouter l'element " << e << " (doublons non autorisés)." << endl;
     }
     else{
         if(e > node->info){
@@ -51,7 +51,7 @@ Noeud* ABR::rechercherElement(const Element &e){
     Noeud * recherche = this->racine;
     while(recherche){
         if(recherche->info == e){
-            cout << "L'element : " << e << "  a été trouvé." <<endl;
+            //cout << "L'element : " << e << "  a été trouvé." <<endl;
             return recherche;
         }
         else if(recherche->info < e){
@@ -61,7 +61,7 @@ Noeud* ABR::rechercherElement(const Element &e){
             recherche = recherche->fg;
         }   
     }
-    cout << "L'element " << e << "  n'est pas dans l'arbre." << endl;
+    //cout << "L'element " << e << "  n'est pas dans l'arbre." << endl;
     return nullptr;
 }
 
