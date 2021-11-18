@@ -20,7 +20,3 @@ Noeud::Noeud(const Element &e){
     info = e;
     couleur = 'R';
 }
-
-void Noeud::affichageNoeud(){
-    std::cout << this->info;
-}
