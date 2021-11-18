@@ -14,10 +14,10 @@ Module `Noeud`
   
 Module `ARN` (Arbre Rouge et Noir)
 - [X] Constructeur par défaut 
-- [ ] Destructeur
+- [X] Destructeur
 - [X] Insertion d'un élément
-- [ ] Rééquilibrage
-  - [ ] Rotation droite
+- [X] Rééquilibrage
+  - [X] Rotation droite
   - [X] Rotation gauche
   - [X] Cas de l'oncle rouge
 - [X] Affichage 
