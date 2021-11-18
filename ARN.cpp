@@ -99,8 +99,11 @@ void ARN::cas1(Noeud* node){
     Noeud* gdPere = getNoeudGrandParent(node);
     Noeud* oncle = getNoeudOncle(node);
     pere->couleur = 'N';
-    oncle->couleur = 'R';
+    cout << "coloration " << pere->info << "en noir" << endl;
+    oncle->couleur = 'N';
+    cout << "coloration " << oncle->info << "en noir" << endl;
     gdPere->couleur = 'R';
+    cout << "coloration " << gdPere->info << "en rouge" << endl;
     equilibrage(gdPere);
 }
 
