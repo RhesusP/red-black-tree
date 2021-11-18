@@ -25,7 +25,7 @@ Module `ARN` (Arbre Rouge et Noir)
 
 Module `ABR` (Arbre Binaire de Recherche non équilibré)
 - [X] Constructeur par défaut
-- [ ] Destructeur
+- [X] Destructeur
 - [X] Insertion d'un élément
 - [X] Affichage
 
