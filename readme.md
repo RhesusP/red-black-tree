@@ -15,12 +15,13 @@ Module `Noeud`
 Module `ARN` (Arbre Rouge et Noir)
 - [X] Constructeur par défaut 
 - [ ] Destructeur
-- [ ] Insertion d'un élément
-  - [X] Insertion du Noeud contenant l'élément sans notion de couleur
-  - [ ] Cas 1 (rotation droite)
-  - [ ] Cas 2 (rotation gauche)
-  - [ ] Cas 3 (symétrie cas 1)
-  - [ ] Cas 4 (symétrie cas 2)
+- [X] Insertion d'un élément
+- [ ] Rééquilibrage
+  - [ ] Rotation droite
+  - [X] Rotation gauche
+  - [X] Cas de l'oncle rouge
+- [X] Affichage 
+
 
 Module `ABR` (Arbre Binaire de Recherche non équilibré)
 
