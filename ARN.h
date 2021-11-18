@@ -12,16 +12,25 @@ class ARN{
         //TODO destructeur de l'ARN
         ~ARN();
         void insertion(const Element &e);
-        bool rechercherElement(const Element &e);
+        Noeud* rechercherElement(const Element &e);
         void affichage();
-        Noeud* getNoeudParent(const Element &e);
-        Noeud* getNoeudGrandParent(const Element &e);
-        Noeud* getNoeudOncle(const Element &e);
+        Noeud* getNoeudParent(const Noeud* node);
+        Noeud* getNoeudGrandParent(const Noeud* node);
+        Noeud* getNoeudArriereGrandParent(const Noeud* node);
+        Noeud* getNoeudOncle(const Noeud* node);
+
+        void equilibrage(Noeud* node);
+        void cas1(Noeud* node);
+        void cas2(Noeud* node);
+
+        void rotationGauche(Noeud* node);
+        void rotationDroite(Noeud* node);
+
+        void insertionRec(Noeud *&node, const Element &e);
     
     private:
         void affichageRec(Noeud* n, int prof);
-        void insertionRec(Noeud *&node, const Element &e);
-        void rotationDroite(Noeud *&node);
+        
     };
 
 #endif

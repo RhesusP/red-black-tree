@@ -4,14 +4,16 @@
 using namespace std;
 
 int main(){
-    /*
-    ARN arbre;
-    for(int i=0 ; i<20 ; i++){
-        arbre.insertion(i);
-    }
-    arbre.affichage();
-*/
 
+    ARN arbre;
+
+    for(int i=0 ; i<20 ; i++){
+        cout << endl << endl << "Insertion de " << i << endl;
+        arbre.insertion(i);
+        arbre.affichage();
+    }
+
+/*
     ARN test;
     test.insertion(10);
     test.insertion(15);
@@ -34,7 +36,7 @@ int main(){
     cout << "Pere de 7 : ";
     b->affichageNoeud();
     cout << endl;
-
+*/
 
     return 0;
 }
