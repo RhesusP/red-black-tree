@@ -28,6 +28,6 @@ class ARN{
         void rotationGauche(Noeud* node);
         void rotationDroite(Noeud* node);
         void insertionRec(Noeud *&node, const Element &e);
-    };
+};
 
 #endif
