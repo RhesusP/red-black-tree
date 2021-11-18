@@ -1,4 +1,5 @@
 #include "ARN.h"
+#include "ABR.h"
 #include <iostream>
 
 using namespace std;
@@ -14,6 +15,15 @@ int main(){
     }
 
     cout << "------------------------------------------------------------" << endl;
+
+    ABR arbreBinaire;
+    
+    for(int i=0 ; i<20 ; i++){
+        arbreBinaire.insertion(i);
+    }
+    arbreBinaire.affichage();
+
+
 /*
     ARN test;
     test.insertion(30);
