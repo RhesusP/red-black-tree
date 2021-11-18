@@ -6,11 +6,10 @@
 class ARN{
     public:
         Noeud* racine;
-        int hauteurNoire;
 
         ARN();  
-        //TODO destructeur de l'ARN
         ~ARN();
+        void vider(Noeud* node);
         void insertion(const Element &e);
         Noeud* rechercherElement(const Element &e);
         void affichage();

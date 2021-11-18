@@ -11,6 +11,7 @@ class Noeud{
         Element info;
 
         Noeud();
+        ~Noeud();
         Noeud(const Element &e);
         void affichageNoeud();      //TODO (delete) DEBUG ONLY 
 };

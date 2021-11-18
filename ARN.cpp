@@ -6,11 +6,24 @@ using namespace std;
 
 ARN::ARN(){
     racine = NULL;
-    hauteurNoire = 0;
 }
 
 ARN::~ARN(){
-    cout << "Destruction ARN." << endl;     //TODO destructeur
+    cout << "Destruction ARN." << endl;
+    if(racine != NULL){
+        vider(racine);
+    }
+}
+
+void ARN::vider(Noeud* node){
+    if(node->fg != nullptr){
+        vider(node->fg);
+    }
+    if(node->fd != nullptr){
+        vider(node->fd);
+    }
+    //cout << "noeud " << node->info << " supprimé" << endl;
+    delete node;
 }
 
 Noeud* ARN::rechercherElement(const Element &e){
@@ -233,7 +246,6 @@ void ARN::affichageRec(Noeud* n, int prof){
 }
 
 void ARN::affichage(){
-    //cout << "Hauteur noire : " << this->hauteurNoire << endl << endl;
     cout << endl;
     affichageRec(this->racine, 0);
 }
