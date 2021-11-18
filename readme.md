@@ -24,10 +24,10 @@ Module `ARN` (Arbre Rouge et Noir)
 
 
 Module `ABR` (Arbre Binaire de Recherche non équilibré)
-- [ ] Constructeur par défaut
+- [X] Constructeur par défaut
 - [ ] Destructeur
-- [ ] Insertion d'un élément
-- [ ] Affichage
+- [X] Insertion d'un élément
+- [X] Affichage
 
 ### L'insertion dans un Arbre bicolore
 
