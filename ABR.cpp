@@ -70,7 +70,12 @@ void ABR::affichageRec(Noeud* n, int prof){
         for(int i=0 ; i<prof ; i++){
             cout << "       ";
         }
-        cout << "─────┤" << n->info << endl;
+        if(prof == 0){
+            cout << " ──────┤" << n->info << " (" << n->couleur << ")" << endl;
+        }
+        else{
+            cout << "+──────┤" << n->info << " (" << n->couleur << ")" << endl;
+        }
         affichageRec(n->fg, prof+1);
     }
 }
