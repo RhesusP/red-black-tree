@@ -9,9 +9,8 @@ using namespace std;
 
 int main(){
 
-    int nbC = 100;          //nombre de collection
-    int nbE = 20000;         //nombre d'element
-
+    int nbC = 10;          //nombre de collection
+    int nbE = 100;         //nombre d'element
 
     chrono::time_point<chrono::system_clock> startARN, endARN;
     startARN = chrono::system_clock::now();
@@ -21,7 +20,6 @@ int main(){
             int random = rand()%1000;
             arbreRougeNoir.insertion(random);
         }
-        //cout << "Arbre rouge noir " << i << " :" << endl;
         //arbreRougeNoir.affichage();
     }
     endARN = chrono::system_clock::now();
@@ -30,23 +28,26 @@ int main(){
     cout << "[ARN] Temps moyen pour une insertion de " << nbE << " elements : " << moyenneARN << " microsecondes." << endl;
 
 
-
     chrono::time_point<chrono::system_clock> startABR, endABR;
     startABR = chrono::system_clock::now();
     for(int i=0; i<nbC ; i++){
-        ABR arbreRougeNoir;
+        ABR arbreBinaire;
         for(int j=0 ; j<nbE ; j++){
             int random = rand()%1000;
-            arbreRougeNoir.insertion(random);
+            arbreBinaire.insertion(random);
         }
-        //cout << "Arbre rouge noir " << i << " :" << endl;
-        //arbreRougeNoir.affichage();
     }
     endABR = chrono::system_clock::now();
     int elapsedTimeABR = chrono::duration_cast<chrono::microseconds>(endABR-startABR).count(); 
     float moyenneABR = elapsedTimeABR/nbC;
     cout << "[ABR] Temps moyen pour une insertion de " << nbE << " elements : " << moyenneABR << " microsecondes." << endl;
 
+    ARN arbre;
+    arbre.insertion(10);
+    arbre.insertion(40);
+    arbre.insertion(60);
+    arbre.insertion(20);
+    arbre.affichage();
 
     return 0;
 }

@@ -9,39 +9,74 @@ ARN::ARN(){
 }
 
 ARN::~ARN(){
-    //cout << "Destruction ARN." << endl;
     if(racine != NULL){
         vider(racine);
     }
 }
 
-void ARN::vider(Noeud* node){
-    if(node->fg != nullptr){
-        vider(node->fg);
-    }
-    if(node->fd != nullptr){
-        vider(node->fd);
-    }
-    //cout << "noeud " << node->info << " supprimé" << endl;
-    delete node;
+void ARN::insertion(const Element &e){
+    insertionRec(this->racine, e);
+
+    Noeud* node = rechercherElement(e);
+    equilibrage(node);
 }
 
-Noeud* ARN::rechercherElement(const Element &e){
-    Noeud * recherche = this->racine;
-    while(recherche){
-        if(recherche->info == e){
-            //cout << "L'element : " << e << "  a été trouvé." <<endl;
-            return recherche;
-        }
-        else if(recherche->info < e){
+void ARN::recherche(const Element &e){
+    Noeud* result = rechercherElement(e);
+    if(result == nullptr){
+        cout << "L'element " << e << " n'est pas dans l'arbre." << endl;
+    }
+    else{
+        cout << "L'element " << e << " a ete trouve." << endl;
+    }
+}
+
+void ARN::affichage(){
+    cout << endl;
+    affichageRec(this->racine, 0);
+}
+
+/* ------------------------------------------------------------ */
+
+Noeud* ARN::getNoeudParent(const Noeud* node){
+    Noeud* recherche = this->racine;
+    Noeud* parent = nullptr;
+    Element e = node->info;
+    while(recherche && recherche->info != e){
+        if(recherche->info < e){
+            parent = recherche;
             recherche = recherche->fd;
         }
         else{
+            parent = recherche;
             recherche = recherche->fg;
-        }   
+        }
     }
-    //cout << "L'element " << e << "  n'est pas dans l'arbre." << endl;
-    return nullptr;
+    return parent;
+}
+
+Noeud* ARN::getNoeudGrandParent(const Noeud* node){
+    Noeud* grandParent = nullptr;
+    Noeud* parent = getNoeudParent(node);
+    if(parent != nullptr){
+        grandParent = getNoeudParent(parent);
+    }
+    return grandParent;
+}
+
+Noeud* ARN::getNoeudOncle(const Noeud* node){
+    Noeud* oncle = nullptr;
+    Noeud* parent = getNoeudParent(node);
+    Noeud* grandParent = getNoeudGrandParent(node);
+    if(grandParent !=nullptr){
+        if(grandParent->fd == parent){
+            oncle = grandParent->fg;
+        }
+        else{
+            oncle = grandParent->fd;
+        }
+    }
+    return oncle;
 }
 
 void ARN::insertionRec(Noeud *&node, const Element &e){
@@ -62,45 +97,39 @@ void ARN::insertionRec(Noeud *&node, const Element &e){
     }
 }
 
-void ARN::insertion(const Element &e){
-    insertionRec(this->racine, e);
-    Noeud* node = rechercherElement(e);
-    equilibrage(node);
-}
-
 void ARN::equilibrage(Noeud* node){
     Noeud* pere = getNoeudParent(node);
     Noeud* oncle = getNoeudOncle(node);
-    if(pere == nullptr){                //on tombe sur la racine (cas 1)
+    if(pere == nullptr){
         //cout << "***** Cas de la racine ******" << endl;
         node->couleur = 'N';
     }
-    else if(pere->couleur == 'N'){                              //(cas 2)
+    else if(pere->couleur == 'N'){
         //cout << "***** Cas equilibré de l'ARN ******" << endl;
         return;
     }
-    else if(oncle != nullptr and oncle->couleur == 'R'){     //oncle rouge : recoloration oncle et pere en noir et gd-pere en rouge     //(cas 3)
+    else if(oncle != nullptr and oncle->couleur == 'R'){
         //cout << "****** Cas de l'oncle rouge ******" << endl;
-        cas1(node);
+        casOncleRouge(node);
     }
     else{
         Noeud* gdPere = getNoeudGrandParent(node);
- 
+        Noeud* pere = getNoeudParent(node);
         if(gdPere->fg != nullptr && gdPere->fg->fd != nullptr && node == gdPere->fg->fd){
+            //cout << "rotation gauche node = PP->fg->fd" << endl;
             rotationGauche(pere);
             node = node->fg;
         }
- 
         else if(gdPere->fd != nullptr && gdPere->fd->fg != nullptr && node == gdPere->fd->fg){
+            //cout << "rotation droite node = PP->fd->fg" << endl;
             rotationDroite(pere);
             node = node->fd;
         }
-        cas2(node);
-        
+        NoeudAlignes(node);
     }
 }
 
-void ARN::cas1(Noeud* node){
+void ARN::casOncleRouge(Noeud* node){
     Noeud* pere = getNoeudParent(node);
     Noeud* gdPere = getNoeudGrandParent(node);
     Noeud* oncle = getNoeudOncle(node);
@@ -110,7 +139,7 @@ void ARN::cas1(Noeud* node){
     equilibrage(gdPere);
 }
 
-void ARN::cas2(Noeud* node){
+void ARN::NoeudAlignes(Noeud* node){
     Noeud* pere = getNoeudParent(node);
     Noeud* gdPere = getNoeudGrandParent(node);
     if(node == pere->fg){
@@ -123,21 +152,15 @@ void ARN::cas2(Noeud* node){
     gdPere->couleur = 'R';
 }
 
+
 void ARN::rotationGauche(Noeud* node){
     //cout << "****** Cas de la rotation gauche ******" << endl;
 
     Noeud* temp = node->fd;
-    Noeud* pereFgTemp = nullptr;
-    if(temp->fg != nullptr){
-        pereFgTemp = getNoeudParent(temp->fg);
-    }
     Noeud* pereNode = getNoeudParent(node);
     Noeud* pereTemp = getNoeudParent(temp);
     
     node->fd = temp->fg;
-    if(temp->fg == nullptr){
-        pereFgTemp = node;
-    }
     pereTemp = pereNode;
     if(pereTemp == nullptr){
         this->racine = temp;
@@ -156,17 +179,10 @@ void ARN::rotationDroite(Noeud* node){
     //cout << "****** Cas de la rotation droite ******" << endl;
 
     Noeud* temp = node->fg;
-    Noeud* pereFdTemp = nullptr;
-    if(temp->fd != nullptr){
-        pereFdTemp = getNoeudParent(temp->fd);
-    }
     Noeud* pereNode = getNoeudParent(node);
     Noeud* pereTemp = getNoeudParent(temp);
     
     node->fg = temp->fd;
-    if(temp->fd == nullptr){
-        pereFdTemp = node;
-    }
     pereTemp = pereNode;
     if(pereTemp == nullptr){
         this->racine = temp;
@@ -181,58 +197,21 @@ void ARN::rotationDroite(Noeud* node){
     pereNode = temp;
 }
 
-Noeud* ARN::getNoeudParent(const Noeud* node){
-    Noeud* recherche = this->racine;
-    Noeud* parent = nullptr;
-    Element e = node->info;
-    while(recherche && recherche->info != e){
-        if(recherche->info < e){
-            parent = recherche;
+Noeud* ARN::rechercherElement(const Element &e){
+    Noeud * recherche = this->racine;
+    while(recherche){
+        if(recherche->info == e){
+            return recherche;
+        }
+        else if(recherche->info < e){
             recherche = recherche->fd;
         }
         else{
-            parent = recherche;
             recherche = recherche->fg;
-        }
+        }   
     }
-    return parent;
+    return nullptr;
 }
-
-
-Noeud* ARN::getNoeudGrandParent(const Noeud* node){
-    Noeud* grandParent = nullptr;
-    Noeud* parent = getNoeudParent(node);
-    if(parent != nullptr){
-        grandParent = getNoeudParent(parent);
-    }
-    return grandParent;
-}
-
-Noeud* ARN::getNoeudArriereGrandParent(const Noeud* node){
-    Noeud* arGdParent = nullptr;
-    Noeud * gdParent = getNoeudGrandParent(node);
-    if(gdParent != nullptr){
-        arGdParent = getNoeudParent(gdParent);
-    }
-    return arGdParent;
-}
-
-Noeud* ARN::getNoeudOncle(const Noeud* node){
-    Noeud* oncle = nullptr;
-    Noeud* parent = getNoeudParent(node);
-    Noeud* grandParent = getNoeudGrandParent(node);
-    if(grandParent !=nullptr){
-        if(grandParent->fd == parent){
-            oncle = grandParent->fg;
-        }
-        else{
-            oncle = grandParent->fd;
-        }
-    }
-    return oncle;
-}
-
-
 
 void ARN::affichageRec(Noeud* n, int prof){
     if(n != nullptr){
@@ -240,12 +219,23 @@ void ARN::affichageRec(Noeud* n, int prof){
         for(int i=0 ; i<prof ; i++){
             cout << "       ";
         }
-        cout << "─────┤" << n->info << " (" << n->couleur << ")" << endl;
+        if(prof == 0){
+            cout << " ──────┤" << n->info << " (" << n->couleur << ")" << endl;
+        }
+        else{
+            cout << "+──────┤" << n->info << " (" << n->couleur << ")" << endl;
+        }
         affichageRec(n->fg, prof+1);
     }
 }
 
-void ARN::affichage(){
-    cout << endl;
-    affichageRec(this->racine, 0);
+void ARN::vider(Noeud* node){
+    if(node->fg != nullptr){
+        vider(node->fg);
+    }
+    if(node->fd != nullptr){
+        vider(node->fd);
+    }
+    //cout << "noeud " << node->info << " supprimé" << endl;
+    delete node;
 }

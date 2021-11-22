@@ -9,7 +9,6 @@ ABR::ABR(){
 }
 
 ABR::~ABR(){
-    //cout << "Destruction ABR." << endl;
     if(racine != NULL){
         vider(racine);
     }

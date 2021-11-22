@@ -1,8 +1,0 @@
-# "nb elmt" "Temps ARN (microsecondes)" "Temps ABR (microsecondes)"
-1000 1522 
-2000 2875 
-3000 4059 
-5000 6224 
-10000 11265 
-15000 15974 
-20000 20690 
