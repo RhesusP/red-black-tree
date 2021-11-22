@@ -1,68 +1,128 @@
 # <div style="text-align:center">TP noté LIFAP6 (7 & 8) </div>
 ## <div style="text-align:center">Arbre de Recherche Bicolore</div>
 
+BERNOT Camille (p1908800)
+FIETIER Loris (p1805561)
+
 ### Travail à réaliser
 
 Projet effectué en binôme dans le cadre de l'UE LIFAP6.
 On se propose de réaliser un module Collection d’`Elements` implantée sous forme d’`Arbre Rouge et Noir`. Vous veillerez à ce que ce module Collection soit bien modulaire, c’est à dire que votre module Collection devra être indépendant de la nature des Elements stockés. Vous vous limiterez aux opérations d’**initialisation** (constructeur) et de **testament** (destructeur) d’une collection, ainsi qu’aux opérations d’**insertion** et de **recherche d’un élément**, sans aborder la question de sa suppression. Vous offrirez également une **procédure de visualisation de l’état interne de l’arbre** modélisant une collection. Cette procédure pourra appeler la procédure interne d’affichage d’un sous-arbre.
 
-### Avancée du projet :
+### Performances
 
-Module `Noeud`
-- Constructeur par défaut et avec paramètre
-- Destructeur
-  
-Module `ARN` (Arbre Rouge et Noir)
-- [X] Constructeur par défaut 
-- [X] Destructeur
-- [X] Insertion d'un élément
-- [X] Rééquilibrage
-  - [X] Rotation droite
-  - [X] Rotation gauche
-  - [X] Cas de l'oncle rouge
-- [X] Affichage 
+Nous avons calculer le temps d'insertion de n éléments aléatoires dans un ABR et un ARN et établir le graphique suivant :
 
+![performances ABR ARN](./img/resultats_perfs.png)
 
-Module `ABR` (Arbre Binaire de Recherche non équilibré)
-- [X] Constructeur par défaut
-- [X] Destructeur
-- [X] Insertion d'un élément
-- [X] Affichage
+Nous avons pu obtenir ce graphique grâce à la commande gnuplot :
+    
+    plot "perfs_insertion.txt" using 1:2 title "Temps ABR (microsecondes)" with linespoints, "perfs_insertion.txt" using 1:3 title "Temps ARN (microsecondes)" with linespoints
 
-### L'insertion dans un Arbre bicolore
+On remarque que l'insertion dans un ARN est beaucoup plus chronophage que l'insertion dans un ABR. Cela est probablement dû aux opérations de rééquilibrages effectuées dans les arbres rouge et noir. 
 
-#### Etape 1 : insertion du Noeud
-Lors de l'insertion dans un `ARN`, la feuille nouvellement créée est rouge.
-Les propriétés de l'arbre ne sont donc plus forcément respectées. 
-On réalise alors plusieurs étapes afin de rééquilibrer l'arbre.
+### Précisions sur l'insertion dans un ARN
 
-#### Etape 2 : réequilibrage si oncle rouge
-Si le `Noeud` Q possède un oncle rouge O, alors : 
-- P et Q deviennent noirs 
-- PP devient rouge
-- Faire ces étapes récursivement de bas en haut jusqu'à atteindre la racine ou un oncle ou un arrière grand-père noir
+Chaque élément est d'abord inséré aux feuilles comme pour un ABR et se voir attribué la couleur rouge. La fonction `void equilibrage(Noeud* node)` est ensuite appellée afin de réequilibrer l'arbre si les regles suivantes ne sont pas respectées : 
+- La racine d'un arbre est toujours noire.
+- Un noeud rouge ne peut pas avoir de fils rouge.
+- Si le noeud inséré possède un oncle rouge, alors le père et l'oncle prennent la couleur noire et le grand-père prend la couleur rouge.
 
-> **La racine doit rester noire.</div>**
+![cas de l'oncle rouge](./img/oncle_rouge.png)
 
-#### Etape 3 : si pas d'oncle rouge
+- Si le noeud inséré ne possède pas d'oncle rouge, alors on fait une **rotation droite** ou une **rotation gauche** en fonction de la position du noeud inséré par rapport à son père et son grand-père.
 
-##### 1)  Si le `Noeud` **Q** fils gauche de **P**, lui-même fils gauche de **PP**
-On fait alors une **<span style="color:red">rotation droite<span>** :  
-- rotation des éléments vers la droite 
-- échange des couleurs de P et de PP
+</br>
+     
+Voici les différents cas possibles de positions du noeud à insérer et les opérations de rotation correspondantes :
 
-![rotation droite](./img/rotation_droite.png)
+**Le noeud inséré est le fils gauche du père, lui-même fils gauche du grand-père**
+![rotation droite](./img/gauche_gauche.png)
 
-> L'insertion est terminée après cette opération.
+**Le noeud inséré est le fils droit du père, lui-même fils droit du grand-père**
+![rotation gauche](img/droit_droit.png)
 
-#### 2) Si le `Noeud` **Q** est le fils droit de **P**, lui-même fils gauche de **PP**
-On fait alors une **<span style="color:red">rotation gauche<span>**. Cela équivaut à une double rotation droite. 
+**Le noeud inséré est le fils gauche du père, lui-même fils droit du grand-père**
+![](img/gauche_droit.png)
 
-![rotation gauche](img/rotation_gauche.png)    
-
-#### 3) Si le `Noeud` **Q** est fils droit de **P**, lui-même fils droit de **PP**
-Symétrie du cas 1)  
+**Le noeud inséré est le fils droit du père, lui-même fils gauche du grand-père**
+![](img/droit_gauche.png)
 
 
-#### 4) Si le `Noeud` **Q** est le fils gauche de **P**, lui-même fils droit de **PP**
-Symétrie du cas 2)
+### Exemple détaillé
+
+Prenons donc l'exemple de l'insertion successive de 10, 40, 60, 20 dans un ARN.
+
+#### Insertion de 10
+
+Ici, l'arbre étant vide, on rentre dans la condition suivante :
+``` c++
+if(pere == nullptr){
+    node->couleur = 'N';
+}
+```
+Le noeud est donc coloré en noir car il est racine de l'arbre.
+
+On obtient donc :
+
+    ──────┤10 (N)
+
+#### Insertion de 40
+
+Ici, on rentre dans la condition suivante :
+``` c++
+else if(pere->couleur == 'N'){
+    //cout << "***** Cas equilibré de l'ARN ******" << endl;
+    return;
+}
+```
+
+Le noeud garde sa couleur par défaut (rouge) car son père est noir. L'arbre est déjà équilibré.
+
+On obtient donc :
+
+          +──────┤40 (R)
+    ──────┤10 (N)
+
+#### Insertion de 60
+
+Le noeud ayant un père rouge et ne possédant pas d'oncle rouge, on entre dans aucun cas de la procédure `equilibrage(Noeud* node)`. On entre alors dans la procedure `cas2(Noeud*)` qui effectue une rotation gauche sur le noeud `10`. 
+
+On obtient alors :
+
+                 +──────┤60 (R)                       +──────┤60 (R)
+          +──────┤40 (R)             ==>        ──────┤40 (N)
+    ──────┤10 (N)                                     +──────┤10 (R)
+
+
+#### Insertion de 20
+
+Le noeud possède un père rouge et un oncle rouge. On peut donc entrer dans le cas de l'oncle rouge. On fait donc un premier appel sur `equilibrage(20)` où l'on rentre dans le cas de l'oncle rouge. Le pere et l'oncle sont donc colorés en noir et le grand-père en rouge. 
+
+``` c++
+void ARN::casOncleRouge(Noeud* node){
+    Noeud* pere = getNoeudParent(node);
+    Noeud* gdPere = getNoeudGrandParent(node);
+    Noeud* oncle = getNoeudOncle(node);
+    pere->couleur = 'N';
+    oncle->couleur = 'N';
+    gdPere->couleur = 'R';
+    equilibrage(gdPere);
+}
+```
+
+On appelle ensuite le `equilibrage(grand-pere)` et l'on rentre dans le cas de la racine 
+
+``` c++
+if(pere == nullptr){
+    node->couleur = 'N';
+}
+```
+
+On obtient alors :
+
+          +──────┤60 (R)                              +──────┤60 (N)
+    ──────┤40 (N)                   ==>         ──────┤40 (N)
+                 +──────┤20 (R)                              +──────┤20 (R)
+          +──────┤10 (R)                              +──────┤10 (N)    
+                                                      
