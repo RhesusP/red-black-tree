@@ -72,8 +72,13 @@ int main(){
     arbreBinaire.affichage();
 
     cout << endl << "--------------------------------------------------------------------------------------------------" << endl;
+    cout << "Recherche dans un ARN :" << endl;
     arbreBicolore.recherche(5);
     arbreBicolore.recherche(99);
+    cout << endl << "--------------------------------------------------------------------------------------------------" << endl;
+    cout << "Recherche dans un ABR :" << endl;
+    arbreBinaire.rechercher(5);
+    arbreBinaire.rechercher(99);
 
     return 0;
 }

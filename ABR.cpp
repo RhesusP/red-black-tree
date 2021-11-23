@@ -46,11 +46,11 @@ void ABR::insertionRec(Noeud *&node, const Element &e){
     }
 }
 
-Noeud* ABR::rechercherElement(const Element &e){
+Noeud* ABR::rechercher(const Element &e){
     Noeud * recherche = this->racine;
     while(recherche){
         if(recherche->info == e){
-            //cout << "L'element : " << e << "  a été trouvé." <<endl;
+            cout << "L'element : " << e << "  a été trouvé." <<endl;
             return recherche;
         }
         else if(recherche->info < e){
@@ -60,7 +60,7 @@ Noeud* ABR::rechercherElement(const Element &e){
             recherche = recherche->fg;
         }   
     }
-    //cout << "L'element " << e << "  n'est pas dans l'arbre." << endl;
+    cout << "L'element " << e << "  n'est pas dans l'arbre." << endl;
     return nullptr;
 }
 

@@ -35,7 +35,7 @@ class ABR{
          * @param e (Element) L'element a rechercher.
          * @return Noeud* de l'element correspondant. nullptr si introuvable.
          */
-        Noeud* rechercherElement(const Element &e);
+        Noeud* rechercher(const Element &e);
 
         /**
          * @brief Affiche l'ABR.
