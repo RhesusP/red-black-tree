@@ -52,6 +52,7 @@ Voici les différents cas possibles de positions du noeud à insérer et les op�
 ### Exemple détaillé
 
 Prenons donc l'exemple de l'insertion successive de 10, 40, 60, 20 dans un ARN.
+> Dans cette documentation, les noeuds ne sont pas colorés en fonction de leur couleur.
 
 #### Insertion de 10
 
@@ -125,4 +126,3 @@ On obtient alors :
     ──────┤40 (N)                   ==>         ──────┤40 (N)
                  +──────┤20 (R)                              +──────┤20 (R)
           +──────┤10 (R)                              +──────┤10 (N)    
-                                                      

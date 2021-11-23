@@ -145,7 +145,7 @@ class ARN{
         /**
          * @brief Procedure recursive affichant les noeud un par un.
          * Affiche les noeuds de l'arbre grace a un parcours infixe. Les noeuds sont decalés en fonction de leur profondeur 
-         * dans l'arbre.
+         * dans l'arbre et son surlignes en fonction de leur couleur.
          * @param n (Noeud*) Noeud a partir d'ou afficher.
          * @param prof (int) Profondeur du noeud
          */

@@ -220,10 +220,22 @@ void ARN::affichageRec(Noeud* n, int prof){
             cout << "       ";
         }
         if(prof == 0){
-            cout << " ──────┤" << n->info << " (" << n->couleur << ")" << endl;
+            cout << " ──────┤";
+            if(n->couleur == 'R'){
+                cout << "\033[1;37;41m" << n->info << " (" << n->couleur << ")\033[0m" << endl;
+            }
+            else{
+                cout << "\033[1;37;40m" << n->info << " (" << n->couleur << ")\033[0m" << endl;
+            }
         }
         else{
-            cout << "+──────┤" << n->info << " (" << n->couleur << ")" << endl;
+            cout << "+──────┤";
+            if(n->couleur == 'R'){
+                cout << "\033[1;37;41m" << n->info << " (" << n->couleur << ")\033[0m" << endl;
+            }
+            else{
+                cout << "\033[1;37;40m" << n->info << " (" << n->couleur << ")\033[0m" << endl;
+            }
         }
         affichageRec(n->fg, prof+1);
     }
