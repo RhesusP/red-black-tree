@@ -17,7 +17,8 @@ Nous avons calculer le temps d'insertion de n éléments aléatoires dans un ABR
 
 Nous avons pu obtenir ce graphique grâce à la commande gnuplot :
     
-    plot "perfs_insertion.txt" using 1:2 title "Temps ABR (microsecondes)" with linespoints, "perfs_insertion.txt" using 1:3 title "Temps ARN (microsecondes)" with linespoints
+    plot "./data/perfs_insertion.txt" using 1:2 title "Temps ABR (microsecondes)" with linespoints, "./data/perfs_insertion.txt" using 1:3 title "Temps ARN (microsecondes)" with linespoints
+
 
 On remarque que l'insertion dans un ARN est beaucoup plus chronophage que l'insertion dans un ABR. Cela est probablement dû aux opérations de rééquilibrages effectuées dans les arbres rouge et noir. 
 

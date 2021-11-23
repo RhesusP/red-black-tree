@@ -9,7 +9,7 @@
 using namespace std;
 
 int main(){
-    ofstream flux("./perfs_insertion.txt");
+    ofstream flux("./data/perfs_insertion.txt");
     if(flux){
         flux << "# \"nb elmt\" \"Temps ABR (microsecondes)\" \"Temps ARN (microsecondes)\"" << endl;
         int nbC = 100;               //nombre de collection (arbre)
