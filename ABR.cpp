@@ -14,36 +14,8 @@ ABR::~ABR(){
     }
 }
 
-void ABR::vider(Noeud* node){
-    if(node->fg != nullptr){
-        vider(node->fg);
-    }
-    if(node->fd != nullptr){
-        vider(node->fd);
-    }
-    //cout << "noeud " << node->info << " supprimé" << endl;
-    delete node;
-}   
-
 void ABR::insertion(const Element &e){
     insertionRec(this->racine, e);
-}
-
-void ABR::insertionRec(Noeud *&node, const Element &e){
-    if(node == NULL){
-        node = new Noeud(e);
-    }
-    else if(e == node->info){
-        //cout << "Impossible d'ajouter l'element " << e << " (doublons non autorisés)." << endl;
-    }
-    else{
-        if(e > node->info){
-            insertionRec(node->fd, e);
-        }
-        else{
-            insertionRec(node->fg, e);
-        }
-    }
 }
 
 Noeud* ABR::rechercher(const Element &e){
@@ -64,6 +36,13 @@ Noeud* ABR::rechercher(const Element &e){
     return nullptr;
 }
 
+void ABR::affichage(){
+    cout << endl;
+    affichageRec(this->racine, 0);
+}
+
+/* ------------------------------------------------------------ */
+
 void ABR::affichageRec(Noeud* n, int prof){
     if(n != nullptr){
         affichageRec(n->fd, prof+1);
@@ -80,7 +59,30 @@ void ABR::affichageRec(Noeud* n, int prof){
     }
 }
 
-void ABR::affichage(){
-    cout << endl;
-    affichageRec(this->racine, 0);
+void ABR::insertionRec(Noeud *&node, const Element &e){
+    if(node == NULL){
+        node = new Noeud(e);
+    }
+    else if(e == node->info){
+        //cout << "Impossible d'ajouter l'element " << e << " (doublons non autorisés)." << endl;
+    }
+    else{
+        if(e > node->info){
+            insertionRec(node->fd, e);
+        }
+        else{
+            insertionRec(node->fg, e);
+        }
+    }
+}
+
+void ABR::vider(Noeud* node){
+    if(node->fg != nullptr){
+        vider(node->fg);
+    }
+    if(node->fd != nullptr){
+        vider(node->fd);
+    }
+    //cout << "noeud " << node->info << " supprimé" << endl;
+    delete node;
 }
